@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .escondida{
+            display: none;
+            
+        }
+    </style> 
+</head>
+<body onload="load()">
+    <button onclick="load()">pesquisar</button>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>nome</th>
+                <th>email</th>
+                <th>fone</th>
+                <th>excluir</th>
+                <th>alterar</th>
+                
+            </tr>
+            <tbody id="body"></tbody>
+
+
+         
+        </thead>
+    </table>
+
+    <div class="escondida" id="escondida">
+        <label for="">alterar nome</label>
+        <input type="text" name="" id="nome1" placeholder="nome">
+        <label for="">alterar email</label>
+        <input type="text" name="" id="email1" placeholder="email">
+        <label for="">alterar fone
+           
+            
+        </label>
+        
+        <input type="text" name="" id="fone1" placeholder="fone">
+        <label for="">id</label>
+        <input type="text" name="" id="idselecionado">
+        <button onclick="alterar()">alterar</button>
+   </div>
+    <script>
+        function load(){
+            fetch("http://localhost:3000/clientes")
+            .then(x => x.json())
+            .then(lista => {    
+           linhas = ''
+            
+            for(var i = 0;i < lista.length;i++){
+                linhas +=
+                `<tr><td>${lista[i].id}</td> 
+                    <td >${lista[i].nome}</td>
+                        <td>${lista[i].email}</td>
+                        <td>${lista[i].fone}</td>
+                        <td><button id="a1" onclick="aparecer(${lista[i].id})">alterar</button></td>
+                        <td><button onclick="excluir(${lista[i].id})">excluir</button></td>
+                            </tr>`
+            }
+            document.getElementById("body").innerHTML = linhas
+           
+            
+        
+})
+
+        }
+   
+
+        function alterar(){
+            const cliente = {
+                nome: "",
+                email: "",
+                fone: ""
+            }
+            cliente.nome = document.getElementById("nome1").value
+            cliente.email = document.getElementById("email1").value
+            cliente.fone = document.getElementById("fone1").value
+
+            const option =  {
+                method:'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(cliente)
+            }
+            var idpesquisa = document.getElementById("idselecionado").value
+            fetch(`http://localhost:3000/clientes/${idpesquisa}`, option)
+                .then(data => data.json())
+                .then(cli => console.log(cli))
+            
+
+            
+            
+
+            }
+        
+            function excluir(idcliente){
+                
+                fetch(`http://localhost:3000/clientes/${idcliente}`, {method:'DELETE'})
+                .then(data => data.json())
+                .then(cli => alert("cliente excluido com sucesso"))
+
+            }
+
+
+            function aparecer(item){
+                document.getElementById("escondida").style.display = 'block'
+                document.getElementById("idselecionado").value = item
+                fetch(`http://localhost:3000/clientes/${item}`)
+                .then(data => data.json())
+                .then(result =>{
+                    document.getElementById("nome1").value = result.nome
+                    document.getElementById("email1").value = result.email
+                    document.getElementById("fone1").value = result.fone
+                })
+            }
+
+    </script>
+    
+</body>
+
+</html>

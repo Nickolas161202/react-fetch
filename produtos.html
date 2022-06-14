@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 400px;
+            margin: auto;
+
+        }
+
+        input {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <fieldset class="container">
+        <label for="produto">informe o produto</label>
+        <input type="text" name="" id="produto">
+        <label for="preco">informe o preco</label>
+        <input type="text" name="" id="preco">
+        <label for="descricao">informe a descricao</label>
+        <input type="text" name="" id="descricao">
+        <div>
+            <button onclick="salvar()">salvar</button>
+        </div>
+    </fieldset>
+    <script>
+        function salvar(){
+        const produto = {
+            produto: "",
+            preco: "",
+            descricao: ""
+
+        }
+        produto.produto = document.getElementById("produto").value
+        produto.preco = document.getElementById("preco").value
+        produto.descricao = document.getElementById("descricao").value
+        
+        const option = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(produto)
+            }
+
+            fetch("http://localhost:3000/produtos", option)
+                .then(data => data.json())
+                .then(cli => console.log(cli))
+            
+        
+
+
+    }
+
+    </script>
+
+
+</body>
+
+</html>

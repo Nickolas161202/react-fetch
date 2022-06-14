@@ -1,0 +1,2 @@
+                    <td><button id="a1" onclick="alterar(${lista[i].id})">alterar</button></td>
+                        <td><button onclick="excluir(${lista[i].id})">excluir</button></td>

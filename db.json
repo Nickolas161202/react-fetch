@@ -1,0 +1,42 @@
+{
+  "clientes": [
+    {
+      "nome": "jao",
+      "email": "@asdf",
+      "fone": "1616",
+      "id": 1
+    },
+    {
+      "nome": "jao",
+      "email": "asdas",
+      "fone": "12321",
+      "id": 2
+    }
+  ],
+  "produtos": [
+    {
+      "produto": "asdad",
+      "preco": "asdasd",
+      "descricao": "daasda",
+      "id": 1
+    },
+    {
+      "produto": "asdad",
+      "preco": "asdasd",
+      "descricao": "daasdaadsadasd",
+      "id": 2
+    },
+    {
+      "produto": "sdfsd",
+      "preco": "sdfsdf",
+      "descricao": "sdfsdf",
+      "id": 3
+    },
+    {
+      "produto": "",
+      "preco": "",
+      "descricao": "",
+      "id": 4
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        body{
+            background-color: rgb(241, 182, 182);
+        }
+       
+        .geral{width: 15%;
+            margin: auto;
+            
+
+        }
+        h1{
+            text-align: center;
+            font-size: 50px;
+            margin-top: 0%;
+        }
+        .busca{
+            width: 100%;
+            height: 50px;
+            display: block;
+            
+        }
+        .butao{
+            border-bottom: solid black 1px;
+            width: 100%;
+            margin-top: 1%;
+        }
+        
+    </style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+   
+    <h1>home</h1>
+    <fieldset class="geral">
+    <div class="busca">
+        <label id="label" for="">Codigo de cliente</label>
+        <br>
+    <input type="number" name="" id="idcliente">
+</div>
+    <div class="butao">
+        <button onclick="pesquisar()">pesquisar</button>
+        <button onclick="excluir()">excluir</button>
+    </div>
+    
+    
+
+    
+    <p></p>
+    <div>
+        
+        
+    <input type="text" name="" id="nome" readonly>
+    <input type="text" name="" id="email" readonly>
+    <input type="text" name="" id="fone" readonly>
+    <div id="button">
+    <button onclick="alterar()" id="alterar">alterar</button>
+    </fieldset>
+    
+    </div>
+</div>
+    <script>
+        function pesquisar() {
+            var idpesquisa = document.getElementById("idcliente").value
+            fetch(`http://localhost:3000/clientes/${idpesquisa}`)
+                .then(data => data.json())
+                .then(result => {
+                    document.getElementById("nome").value = result.nome
+                    document.getElementById("email").value = result.email
+                    document.getElementById("fone").value = result.fone
+                    
+                    
+                })
+
+        }
+
+        function salvar(){
+            const cliente = {
+                nome:"",
+                email:"",
+                fone:""
+            }
+            cliente.nome = document.getElementById("nome").value
+            cliente.email = document.getElementById("email").value
+            cliente.fone = document.getElementById("fone").value
+            console.log(cliente);
+            const option = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(cliente)
+            }
+            var idpesquisa = document.getElementById("idcliente").value
+            fetch(`http://localhost:3000/clientes/${idpesquisa}`, option)
+                .then(data => data.json())
+                .then(cli => console.log(cli))
+            
+
+            
+        }
+         function alterar(){
+           document.getElementById("nome").removeAttribute('readonly');
+            document.getElementById("email").removeAttribute('readonly');
+            document.getElementById("fone").removeAttribute('readonly');
+        
+           
+          document.getElementById("button").innerHTML = `<button onclick="salvar()">salvar</button>`
+         }
+        function excluir(){
+            var idpesquisa = document.getElementById("idcliente").value
+            fetch(`http://localhost:3000/clientes/${idpesquisa}`, {method:'DELETE'})
+                .then(data => data.json())
+                .then(cli => alert("cliente excluido com sucesso"))
+
+
+        }
+    </script>
+</body>
+
+</html>
